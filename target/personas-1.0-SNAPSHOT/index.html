@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Gestor de Personas.</h1>
+        
+        <form action="agregar" method="post">
+            <br>DNI:<input type="number" name="dni">
+            <br>Nombre:<input type="text" name="nombre">
+            <br>Apellido:<input type="text" name="apellido">
+            <br>Edad:<input type="number" name="edad">
+            <br>Foto:<input type="text" name="foto">
+            <br><input type="submit" value="Agregar"><br>
+        </form><br>
+        
+        <form action="listado" method="get">
+            <input type="submit" value="Listado completo">
+        </form>
+        <form action="listado_dni" method="get">
+            <input type="submit" value="Listado por DNI">
+            <input type="number" name="listaDni">
+        </form>
+        <form action="listado_edad" method="get">
+            <input type="submit" value="Listado por Edad">
+            <input type="number" name="listaEdad">
+        </form>
+        <form action="listado_nombre" method="get">
+            <input type="submit" value="Listado por Nombre">
+            <input type="text" name="listaNombre">
+        </form>        
+        
+    </body>
+</html>
