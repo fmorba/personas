@@ -34,7 +34,7 @@ public class DatabaseJUnitTest {
     @Test
     public void databaseCrearTabla(){
 	String resultado = DBTest.CrearTabla();
-        assertTrue(resultado.contains("personas_tbl"));
+        assertTrue(resultado.contains("tabla"));
     }
     
     /**

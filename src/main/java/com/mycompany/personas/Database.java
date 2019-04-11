@@ -64,8 +64,8 @@ public class Database {
             con = DriverManager.getConnection("jdbc:hsqldb:mem:.", "SA", "");
             stmt = con.createStatement();
          
-            result = stmt.executeUpdate("CREATE TABLE personas_tbl (dni INT NOT NULL, nombre VARCHAR(50) NOT NULL, apellido VARCHAR(50) NOT NULL, edad int, foto VARCHAR(350),PRIMARY KEY (dni));");
-            respuesta="Tabla creada.";		
+            result = stmt.executeUpdate("CREATE TABLE tabla (dni INT NOT NULL, nombre VARCHAR(50) NOT NULL, apellido VARCHAR(50) NOT NULL, edad int, foto LONGVARCHAR,PRIMARY KEY (dni));");
+            respuesta="La tabla fue creada.";		
          
         } catch (Exception e) {
             respuesta=e.getMessage();
@@ -88,7 +88,7 @@ public class Database {
             Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
             con = DriverManager.getConnection( "jdbc:hsqldb:mem:.", "SA", ""); 
             stmt = con.createStatement(); 
-            String query= "INSERT INTO personas_tbl VALUES ("+persona.getDNI()+",\'"+persona.getNombre()+"\',"+"\'"+persona.getApellido()+"\',"+persona.getEdad()+",\'"+persona.getFoto()+"\');";
+            String query= "INSERT INTO tabla VALUES ("+persona.getDNI()+",\'"+persona.getNombre()+"\',"+"\'"+persona.getApellido()+"\',"+persona.getEdad()+",\'"+persona.getFoto()+"\');";
             result = stmt.executeUpdate(query); 
             con.commit(); 
             respuesta=result+" filas insertadas."; 
@@ -107,17 +107,17 @@ public class Database {
        Connection con = null;
        Statement stmt = null;
        int result = 0;
-       List<String> respuesta = new ArrayList<>();
+       List<Persona> respuesta = new ArrayList<>();
        ResultSet resu = null; 
        
        try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection("jdbc:hsqldb:mem:.", "SA", "");
             stmt = con.createStatement();
-            resu = stmt.executeQuery("SELECT * FROM personas_tbl;");
+            resu = stmt.executeQuery("SELECT * FROM tabla;");
          
             while(resu.next()){
-                 String aux = resu.getInt("dni")+" | "+resu.getString("nombre")+" | "+resu.getString("apellido") + " | "+resu.getInt("edad")+" | "+resu.getString("foto")+ " |||";
+                 Persona aux = new Persona(resu.getInt("dni"),resu.getString("nombre"),resu.getString("apellido"),resu.getInt("edad"),resu.getString("foto"));
                  respuesta.add(aux);
             }         
         } catch (Exception e) {
@@ -134,17 +134,17 @@ public class Database {
     public List ListadoNombre(String Nombre){
        Connection con = null;
        Statement stmt = null;
-       List<String> respuesta = new ArrayList<>();
+       List<Persona> respuesta = new ArrayList<>();
        ResultSet resu = null; 
        
        try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection("jdbc:hsqldb:mem:.", "SA", "");
             stmt = con.createStatement();
-            resu = stmt.executeQuery("SELECT * FROM personas_tbl WHERE nombre LIKE \'"+Nombre+"%\';");
+            resu = stmt.executeQuery("SELECT * FROM tabla WHERE nombre LIKE \'"+Nombre+"%\';");
          
             while(resu.next()){
-                 String aux = resu.getInt("dni")+" | "+resu.getString("nombre")+" | "+resu.getString("apellido") + " | "+resu.getInt("edad")+" | "+resu.getString("foto")+ " ||| ";
+                 Persona aux = new Persona(resu.getInt("dni"),resu.getString("nombre"),resu.getString("apellido"),resu.getInt("edad"),resu.getString("foto"));
                  respuesta.add(aux);
             }         
         } catch (Exception e) {
@@ -161,18 +161,18 @@ public class Database {
     public List ListadoDNI(int dni){
        Connection con = null;
        Statement stmt = null;
-       List<String> respuesta = new ArrayList<>();
+       List<Persona> respuesta = new ArrayList<>();
        ResultSet resu = null; 
        
        try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection("jdbc:hsqldb:mem:.", "SA", "");
             stmt = con.createStatement();
-            resu = stmt.executeQuery("SELECT * FROM personas_tbl WHERE dni LIKE \'"+dni+"%\';");
+            resu = stmt.executeQuery("SELECT * FROM tabla WHERE dni LIKE \'"+dni+"%\';");
          
             while(resu.next()){
-                 String aux = resu.getInt("dni")+" | "+resu.getString("nombre")+" | "+resu.getString("apellido") + " | "+resu.getInt("edad")+" | "+resu.getString("foto")+ " ||| ";
-                 respuesta.add(aux);
+                Persona aux = new Persona(resu.getInt("dni"),resu.getString("nombre"),resu.getString("apellido"),resu.getInt("edad"),resu.getString("foto"));
+                respuesta.add(aux);
             }         
         } catch (Exception e) {
             respuesta=null;
@@ -188,18 +188,18 @@ public class Database {
     public List ListadoEdad(int edad){
        Connection con = null;
        Statement stmt = null;       
-       List<String> respuesta = new ArrayList<>();
+       List<Persona> respuesta = new ArrayList<>();
        ResultSet resu = null; 
        
        try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection("jdbc:hsqldb:mem:.", "SA", "");
             stmt = con.createStatement();
-            resu = stmt.executeQuery("SELECT * FROM personas_tbl WHERE edad LIKE \'"+edad+"%\';");
+            resu = stmt.executeQuery("SELECT * FROM tabla WHERE edad LIKE \'"+edad+"%\';");
          
             while(resu.next()){
-                 String aux = resu.getInt("dni")+" | "+resu.getString("nombre")+" | "+resu.getString("apellido") + " | "+resu.getInt("edad")+" | "+resu.getString("foto")+ " ||| ";
-                 respuesta.add(aux);
+                Persona aux = new Persona(resu.getInt("dni"),resu.getString("nombre"),resu.getString("apellido"),resu.getInt("edad"),resu.getString("foto"));
+                respuesta.add(aux);
             }         
         } catch (Exception e) {
             respuesta=null;

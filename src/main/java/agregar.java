@@ -1,43 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import com.mycompany.personas.Controlador;
+import com.mycompany.personas.ImagenGenerador;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
- * @author Usuario
+ * @author Franco Morbidoni
  */
 @WebServlet(urlPatterns = {"/agregar"})
+@MultipartConfig
 public class agregar extends HttpServlet {
 Controlador controlador = new Controlador();
+ImagenGenerador imagenGenerador = new ImagenGenerador();
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Procesa los pedidos de los métodos GET y POST de la página.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request pedido del servlet
+     * @param response respuesta del servlet
+     * @throws ServletException si el servlet provoca un error.
+     * @throws IOException si ocurre un problema con I/O
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String resp = controlador.Agregar(Integer.valueOf(request.getParameter("dni")), request.getParameter("nombre"), request.getParameter("apellido"), Integer.valueOf(request.getParameter("edad")), request.getParameter("foto"));
+            String foto="";
+            int dni = Integer.valueOf(request.getParameter("dni"));
+            String nombre=request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            int edad = Integer.valueOf(request.getParameter("edad"));
+            Part filePart = request.getPart("foto");
+            if (filePart.getSize()==0) {
+                foto="Sin foto.";
+            }else{
+                InputStream fileContent = filePart.getInputStream();
+                Image image = ImageIO.read(fileContent);
+                BufferedImage bi = imagenGenerador.createResizedCopy(image, 150, 150, true);
+                foto=imagenGenerador.encodeToString(bi, "png");
+            }
+            String resp = controlador.Agregar(dni,nombre,apellido,edad,foto);
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet agregar</title>");            
+            out.println("<title>Agregar</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>" + resp + "</h1>");

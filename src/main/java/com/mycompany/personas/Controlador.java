@@ -45,8 +45,8 @@ public class Controlador {
      * @return Listado de objetos Persona, null en caso de estar vacio.
      */
     @RequestMapping("/listado")
-    public List<String> Listado(){
-        List<String> listado = new ArrayList<>();
+    public List<Persona> Listado(){
+        List<Persona> listado = new ArrayList<>();
         listado=DB.Listado();
         return listado;
     }
@@ -57,8 +57,8 @@ public class Controlador {
      * @return Listado de objetos Persona, null en caso de estar vacio.
      */
     @RequestMapping("/listado_dni")
-    public List<String> Listado(@RequestParam(value ="dni",defaultValue ="  ") int Dni){
-        List<String> listado = new ArrayList<>();
+    public List<Persona> Listado(@RequestParam(value ="dni",defaultValue ="  ") int Dni){
+        List<Persona> listado = new ArrayList<>();
         listado=DB.ListadoDNI(Dni);
         return listado;
     }
@@ -70,8 +70,8 @@ public class Controlador {
      * @return Listado de objetos Persona, null en caso de estar vacio.
      */
     @RequestMapping("/listado_nombre")
-    public List<String> Listado(@RequestParam(value ="nombre",defaultValue ="  ") String Nombre){
-        List<String> listado = new ArrayList<>();
+    public List<Persona> Listado(@RequestParam(value ="nombre",defaultValue ="  ") String Nombre){
+        List<Persona> listado = new ArrayList<>();
         listado=DB.ListadoNombre(Nombre);
         return listado;
     }
@@ -83,8 +83,8 @@ public class Controlador {
      * @return Listado de objetos Persona, null en caso de estar vacio.
      */
     @RequestMapping("/listado_edad")
-    public List<String> ListadoEdad(@RequestParam(value ="edad",defaultValue ="  ") int Edad){
-        List<String> listado = new ArrayList<>();
+    public List<Persona> ListadoEdad(@RequestParam(value ="edad",defaultValue ="  ") int Edad){
+        List<Persona> listado = new ArrayList<>();
         listado=DB.ListadoEdad(Edad);
         return listado;
     }

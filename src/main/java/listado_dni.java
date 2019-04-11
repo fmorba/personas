@@ -1,10 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import com.mycompany.personas.Controlador;
+import com.mycompany.personas.Persona;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,19 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 public class listado_dni extends HttpServlet {
 Controlador controlador = new Controlador();
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Procesa los pedidos de los métodos GET y POST de la página.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request pedido del servlet
+     * @param response respuesta del servlet
+     * @throws ServletException si el servlet provoca un error.
+     * @throws IOException si ocurre un problema con I/O
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            List <String> resp = controlador.Listado(Integer.valueOf(request.getParameter("listaDni")));
+            List <Persona> resp = controlador.Listado(Integer.valueOf(request.getParameter("listaDni")));
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -42,8 +36,14 @@ Controlador controlador = new Controlador();
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Listado filtrado por DNI:</h1>");
-            for (String string : resp) {
-                out.println(string+"<br>");
+            for (Persona persona : resp) {
+               out.println(persona.getDNI() +" | " +persona.getNombre()+" | "+persona.getApellido()+" | "+persona.getEdad()+" |    ");
+               if (persona.getFoto().equals("Sin foto.")) {
+                   out.print(persona.getFoto()+"<br>");
+               }else{
+                  String encoding = "data:image/png;base64," + persona.getFoto();
+                   out.print("<img src=\"" + encoding +"\" alt=\"Foto no encontrada.\" height=\"150\" width=\"150\"><br>");
+               }
             }
             out.println("</body>");
             out.println("</html>");

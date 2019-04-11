@@ -7,12 +7,12 @@
     <body>
         <h1>Gestor de Personas.</h1>
         
-        <form action="agregar" method="post">
+        <form action="agregar" method="post" enctype="multipart/form-data">
             <br>DNI:<input type="number" name="dni">
             <br>Nombre:<input type="text" name="nombre">
             <br>Apellido:<input type="text" name="apellido">
             <br>Edad:<input type="number" name="edad">
-            <br>Foto:<input type="text" name="foto">
+            <br>Foto:<input type="file" name="foto" accept="image/png">
             <br><input type="submit" value="Agregar"><br>
         </form><br>
         

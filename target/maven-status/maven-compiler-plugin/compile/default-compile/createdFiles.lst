@@ -6,4 +6,5 @@ listado.class
 agregar.class
 listado_edad.class
 com\mycompany\personas\Aplicacion.class
+com\mycompany\personas\ImagenGenerador.class
 com\mycompany\personas\Database.class
