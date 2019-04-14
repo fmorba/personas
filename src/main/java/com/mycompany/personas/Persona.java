@@ -1,7 +1,10 @@
 package com.mycompany.personas;
 
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * La clase Persona representa al objeto que manipulara la base de datos, usando
@@ -11,37 +14,47 @@ import javax.persistence.Id;
  * @version 1.0
  */
 @Entity
-public class Persona {
+@Table(name = "persona")
+public class Persona implements Serializable{
     @Id
-    private final int DNI;
-    private final String Nombre;
-    private final String Apellido;
-    private final int Edad;
-    private final String Foto;
+    private int dni;
+    @Column(name = "nombre")
+    private String nombre;
+    @Column(name = "apellido")
+    private String apellido;
+    @Column(name = "edad")
+    private int edad;
+    @Column(name = "foto", length=16777216)
+    private String foto;
 
+    /**
+     * Constructor vacio.
+     */
+    protected Persona() {}
+    
     /**
      *Constructor de la clase Persona
      * 
-     * @param DNI El dni del individuo, ssirve como identificador.
-     * @param Nombre El nombre del individio.
-     * @param Apellido El apellido del individuo.
-     * @param Edad Un numero entero representando la edad del individos en años.
-     * @param Foto Direccion url de la ubicación de la foto.
+     * @param dni El dni del individuo, ssirve como identificador.
+     * @param nombre El nombre del individio.
+     * @param apellido El apellido del individuo.
+     * @param edad Un numero entero representando la edad del individos en años.
+     * @param foto Direccion url de la ubicación de la foto.
      */
-    public Persona(int DNI, String Nombre, String Apellido, int Edad, String Foto) {
-        this.DNI = DNI;
-        this.Nombre = Nombre;
-        this.Apellido = Apellido;
-        this.Edad = Edad;
-        this.Foto = Foto;
+    public Persona(int dni, String nombre, String apellido, int edad, String foto) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.foto = foto;
     }
 
     /**
-     * Método getter del DNI
-     * @return DNI del individo.
+     * Método getter del dni
+     * @return dni del individo.
      */
-    public int getDNI() {
-        return DNI;
+    public int getDni() {
+        return dni;
     }
 
     /**
@@ -49,7 +62,7 @@ public class Persona {
      * @return Nombre del individuo.
      */
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     /**
@@ -57,7 +70,7 @@ public class Persona {
      * @return Apellido del individuo.
      */
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
     /**
@@ -65,7 +78,7 @@ public class Persona {
      * @return Edad del individuo.
      */
     public int getEdad() {
-        return Edad;
+        return edad;
     }
 
     /**
@@ -73,7 +86,7 @@ public class Persona {
      * @return String correspondiente a la ubicación de la foto.
      */
     public String getFoto() {
-        return Foto;
+        return foto;
     }
     
     
