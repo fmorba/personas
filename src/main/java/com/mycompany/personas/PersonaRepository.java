@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- *
+ * Clase encargada del almacenaje y busqueda de los datos almacenados en 
+ * memoria mediante persistencia.
+ * 
  * @author Franco Morbidoni
  */
 @Repository
