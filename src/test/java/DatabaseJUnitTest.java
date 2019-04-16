@@ -1,4 +1,6 @@
 import com.mycompany.personas.Aplicacion;
+import com.mycompany.personas.Domicilio;
+import com.mycompany.personas.DomicilioRepository;
 import com.mycompany.personas.Persona;
 import com.mycompany.personas.PersonaRepository;
 import java.util.List;
@@ -10,14 +12,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- *
+ * Clase que contiene los test.
+ * 
  * @author Franco Morbidoni
+ * @version 1.4
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Aplicacion.class)
 public class DatabaseJUnitTest {
     @Autowired
     PersonaRepository personaRepository;
+    @Autowired
+    DomicilioRepository domicilioRepository;
     
     public DatabaseJUnitTest() {        
         
@@ -41,8 +47,8 @@ public class DatabaseJUnitTest {
     public void listadoDniTest(){
         personaRepository.save(new Persona(324,"Juan","Perez",33,"Sin Foto"));
         personaRepository.save(new Persona(314,"Luis","Perez",23,"Sin Foto"));
-        List<Persona> test = (List<Persona>) personaRepository.findByDniLike(314);
-        assertEquals(test.size(), 1);
+        Persona test = personaRepository.findByDni(314);
+        assertEquals(test.getNombre(), "Luis");
     }
    
     /**
@@ -64,6 +70,20 @@ public class DatabaseJUnitTest {
         personaRepository.save(new Persona(324,"Juan","Perez",33,"Sin Foto"));
         personaRepository.save(new Persona(314,"Luis","Perez",23,"Sin Foto"));
         List<Persona> test = (List<Persona>) personaRepository.findByEdadLike(33);
+        assertEquals(test.size(), 1);
+    }
+    
+    /**
+     * Test para verificar la vinculacion entre persona y domicilio. 
+     */
+    @Test
+    public void listadoDomicilioTest(){
+        Persona per = new Persona(324,"Juan","Perez",33,"Sin Foto");
+        Domicilio dom = new Domicilio("Italia", 111, 2400, "San Francisco");
+        dom.setPersona(per);
+        personaRepository.save(per);
+        domicilioRepository.save(dom);
+        List<Domicilio> test = (List<Domicilio>) domicilioRepository.findByPersona(per);
         assertEquals(test.size(), 1);
     }
 }

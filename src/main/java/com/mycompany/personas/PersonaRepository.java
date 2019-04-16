@@ -9,11 +9,12 @@ import java.util.List;
  * memoria mediante persistencia.
  * 
  * @author Franco Morbidoni
+ * @version 1.3
  */
 @Repository
 public interface PersonaRepository extends CrudRepository<Persona, Long> {
     
-    List<Persona> findByDniLike(int DNI);
+    Persona findByDni(int DNI);
     
     List<Persona> findByNombreIgnoreCaseLike(String Nombre);
     

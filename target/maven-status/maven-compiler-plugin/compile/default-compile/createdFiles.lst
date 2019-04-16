@@ -1,9 +1,8 @@
 com\mycompany\personas\Controlador.class
-com\mycompany\personas\exceptions\PreexistingEntityException.class
 com\mycompany\personas\Persona.class
 com\mycompany\personas\Persona_.class
-com\mycompany\personas\exceptions\IllegalOrphanException.class
+com\mycompany\personas\Domicilio.class
+com\mycompany\personas\Domicilio_.class
+com\mycompany\personas\DomicilioRepository.class
 com\mycompany\personas\Aplicacion.class
 com\mycompany\personas\PersonaRepository.class
-com\mycompany\personas\exceptions\NonexistentEntityException.class
-com\mycompany\personas\ImagenGenerador.class
