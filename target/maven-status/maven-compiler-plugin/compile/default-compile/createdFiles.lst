@@ -2,6 +2,7 @@ com\mycompany\personas\Controlador.class
 com\mycompany\personas\Persona.class
 com\mycompany\personas\Persona_.class
 com\mycompany\personas\Domicilio.class
+com\mycompany\personas\Respuesta.class
 com\mycompany\personas\Domicilio_.class
 com\mycompany\personas\DomicilioRepository.class
 com\mycompany\personas\Aplicacion.class

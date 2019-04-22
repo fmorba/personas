@@ -3,7 +3,10 @@ package com.mycompany.personas;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,27 +107,22 @@ public class Controlador {
      * dni.
      * 
      * @param dni Identificador de la persona.
-     * @param Calle String correspondiente a la calle del domicilio.
-     * @param Numero Numero del domicilio.
-     * @param CodigoPostal Código postal de la localidad del domicilio.
-     * @param Localidad String correspondiente al nombre de la localidad donde 
-     * se halla el domicilio.
+     * @param domicilio Objeto domicilio a registrar.
      * @return Mensaje de confirmación.
      */
-    @RequestMapping(value = "/personas/{dni}/domicilios", method = RequestMethod.POST)
-    public String AgregarDomicilio(@PathVariable("dni") int dni,
-            @RequestParam(value = "calle", required = false) String Calle,
-            @RequestParam(value = "numero", required = false) int Numero,
-            @RequestParam(value = "codigo", required = false) int CodigoPostal,
-            @RequestParam(value = "localidad", required = false) String Localidad) {
+    @RequestMapping(value = "/personas/{dni}/domicilios", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<Respuesta> AgregarDomicilio(@PathVariable("dni") int dni,
+            @RequestBody Domicilio domicilio) {
         
         Persona persona = personaRepository.findByDni(dni);
      
-        Domicilio domicilio = new Domicilio(Calle, Numero, CodigoPostal, Localidad);
         domicilio.setPersona(persona);
         
+        Respuesta respuesta = new Respuesta("Registrado.");
+        ResponseEntity response = new ResponseEntity(respuesta, HttpStatus.CREATED);
+        
         domicilioRepository.save(domicilio);
-        return "Registrado.";
+        return response;
     }
     
     /**
@@ -135,10 +133,12 @@ public class Controlador {
      * @return Listado de objetos domicilios encontrados.
      */
     @RequestMapping(value = "/personas/{dni}/domicilios", method = RequestMethod.GET)
-    public List<Domicilio> ListadoDomicilios(@PathVariable("dni") int dni){
+    public ResponseEntity<List<Domicilio>> ListadoDomicilios(@PathVariable("dni") int dni){
         List<Domicilio> listado = new ArrayList<>();
         Persona persona = personaRepository.findByDni(dni);
         listado = domicilioRepository.findByPersona(persona);
-        return listado;
+        
+        ResponseEntity response = new ResponseEntity(listado, HttpStatus.FOUND);
+        return response;
     }
 }

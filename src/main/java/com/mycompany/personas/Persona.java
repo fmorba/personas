@@ -1,9 +1,14 @@
 package com.mycompany.personas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,11 +31,14 @@ public class Persona implements Serializable{
     private int edad;
     @Column(name = "foto", length=16777216)
     private String foto;
+    
+    @OneToMany(mappedBy = "persona",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Domicilio> domicilios;
 
     /**
      * Constructor vacio.
      */
-    protected Persona() {}
+    protected Persona() {this.domicilios = new ArrayList<>();}
     
     /**
      *Constructor de la clase Persona
@@ -42,6 +50,7 @@ public class Persona implements Serializable{
      * @param foto Direccion url de la ubicación de la foto.
      */
     public Persona(int dni, String nombre, String apellido, int edad, String foto) {
+        this.domicilios = new ArrayList<Domicilio>();
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
