@@ -28,50 +28,48 @@ public class Controlador {
     
     /**
      * Método que detecta cuando el usuario desea agregar un objeto persona a la
-     * base de datos.
-     *
-     * @param Dni Identificador, dni de la persona.
-     * @param Nombre String correspondiente al nombre de la persona.
-     * @param Apellido String correspondiente al apellido de la persona.
-     * @param Edad int correspondiente a la edad de la persona.
-     * @param Foto correspondiente a la foto codificada en base64.
+     * base de datos.     *
+     * 
+     * @param persona Objeto persona a registrar en la base de datos.
      * @return Respuesta obtenida por el gestor de la base de datos.
      */
-    @RequestMapping(value = "/personas", method = RequestMethod.POST)
-    public String Agregar(@RequestParam(value = "dni") int Dni,
-            @RequestParam(value = "nombre", required = false) String Nombre,
-            @RequestParam(value = "apellido", required = false) String Apellido,
-            @RequestParam(value = "edad", required = false) int Edad,
-            @RequestParam(value = "foto", required = false) String Foto) {
+    @RequestMapping(value = "/personas", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity Agregar(@RequestBody Persona persona) {
         
-        Persona persona = new Persona(Dni, Nombre, Apellido, Edad, Foto);
+        Respuesta respuesta = new Respuesta("Registrado.");
+        ResponseEntity response = new ResponseEntity(respuesta, HttpStatus.CREATED);
+        
         personaRepository.save(persona);
-        return "Registrado.";
+        return response;
     }
 
     /**
      * Método que detecta cuando los usuarios piden un listado de las personas
      * registradas en la base de datos.
      *
-     * @return Listado de objetos Persona, null en caso de estar vacio.
+     * @return Listado de objetos Persona en la base de datos.
      */
     @RequestMapping(value = "/personas", method = RequestMethod.GET)
-    public List<Persona> Listado() {
+    public ResponseEntity<List<Persona>> Listado() {
         List<Persona> listado = new ArrayList<>();
         listado = (List<Persona>) personaRepository.findAll();
-        return listado;
+        
+        ResponseEntity response = new ResponseEntity(listado, HttpStatus.FOUND);
+        return response;
     }
 
     /**
      * Método que detecta cuando el usuario desea una lista filtrada por el dni.
      *
      * @param Dni Valor correspondiente al dni el usuario.
-     * @return Listado de objetos Persona, null en caso de estar vacio.
+     * @return Listado de objetos Persona encontrados.
      */
     @RequestMapping(value = "/personas", method = RequestMethod.GET, params = "dni")
-    public Persona Listado(@RequestParam(value = "dni", defaultValue = "  ") int Dni) {
+    public ResponseEntity<Persona> Listado(@RequestParam(value = "dni", defaultValue = "  ") int Dni) {
         Persona persona = personaRepository.findByDni(Dni);
-        return persona;
+        
+        ResponseEntity response = new ResponseEntity(persona, HttpStatus.FOUND);
+        return response;
     }
 
     /**
@@ -79,13 +77,15 @@ public class Controlador {
      * nombre ingresado.
      *
      * @param Nombre String correspondiente al nombre de la persona.
-     * @return Listado de objetos Persona, null en caso de estar vacio.
+     * @return Listado de objetos Persona encontrados.
      */
     @RequestMapping(value = "/personas", method = RequestMethod.GET, params = "nombre")
-    public List<Persona> Listado(@RequestParam(value = "nombre", defaultValue = "  ") String Nombre) {
+    public ResponseEntity<List<Persona>> Listado(@RequestParam(value = "nombre", defaultValue = "  ") String Nombre) {
         List<Persona> listado = new ArrayList<>();
         listado = (List<Persona>) personaRepository.findByNombreIgnoreCaseLike(Nombre);
-        return listado;
+        
+        ResponseEntity response = new ResponseEntity(listado, HttpStatus.FOUND);
+        return response;
     }
 
     /**
@@ -93,13 +93,15 @@ public class Controlador {
      * por parte del usuario.
      *
      * @param Edad int correspondiente a la edad de la persona.
-     * @return Listado de objetos Persona, null en caso de estar vacio.
+     * @return Listado de objetos Persona encontrados.
      */
     @RequestMapping(value = "/personas", method = RequestMethod.GET, params = "edad")
-    public List<Persona> ListadoEdad(@RequestParam(value = "edad", defaultValue = "  ") int Edad) {
+    public ResponseEntity<List<Persona>> ListadoEdad(@RequestParam(value = "edad", defaultValue = "  ") int Edad) {
         List<Persona> listado = new ArrayList<>();
         listado = (List<Persona>) personaRepository.findByEdadLike(Edad);
-        return listado;
+        
+        ResponseEntity response = new ResponseEntity(listado, HttpStatus.FOUND);
+        return response;
     }
     
     /**
@@ -122,6 +124,7 @@ public class Controlador {
         ResponseEntity response = new ResponseEntity(respuesta, HttpStatus.CREATED);
         
         domicilioRepository.save(domicilio);
+        
         return response;
     }
     
