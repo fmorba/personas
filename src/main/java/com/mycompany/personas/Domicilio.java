@@ -19,7 +19,8 @@ import javax.persistence.Table;
 @Table(name = "domicilio")
 public class Domicilio implements Serializable {
    @Id
-   @GeneratedValue( strategy= GenerationType.AUTO ) 
+   @GeneratedValue( strategy= GenerationType.AUTO )
+   @Column(name = "id")
    private int id;
    @Column(name = "calle")
    private String calle;
@@ -134,15 +135,6 @@ public class Domicilio implements Serializable {
      */
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
-    }
-
-    /**
-     * Método getter para recuperar la información de la persona a la que le 
-     * pertenece el domicilio.
-     * @return Objeto persona.
-     */
-    public Persona getPersona() {
-        return persona;
     }
 
     /**

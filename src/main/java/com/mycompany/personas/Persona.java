@@ -22,6 +22,7 @@ import javax.persistence.Table;
 @Table(name = "persona")
 public class Persona implements Serializable{
     @Id
+    @Column(name = "dni")
     private int dni;
     @Column(name = "nombre")
     private String nombre;
@@ -38,7 +39,7 @@ public class Persona implements Serializable{
     /**
      * Constructor vacio.
      */
-    protected Persona() {this.domicilios = new ArrayList<>();}
+    protected Persona() {}
     
     /**
      *Constructor de la clase Persona
@@ -50,7 +51,7 @@ public class Persona implements Serializable{
      * @param foto Direccion url de la ubicación de la foto.
      */
     public Persona(int dni, String nombre, String apellido, int edad, String foto) {
-        this.domicilios = new ArrayList<Domicilio>();
+        this.domicilios = new ArrayList<>();
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -97,6 +98,21 @@ public class Persona implements Serializable{
     public String getFoto() {
         return foto;
     }
-    
+
+    /**
+     *Mètodo getter para obtener el listado de domicilios.
+     * @return Listado de domicilios registrados.
+     */
+    public List<Domicilio> getDomicilios() {
+        return domicilios;
+    }
+
+    /**
+     * Mètodo setter para el listado de domicilios.
+     * @param domicilios Listado de domicilios registrados.
+     */
+    public void setDomicilios(List<Domicilio> domicilios) {
+        this.domicilios = domicilios;
+    }   
     
 }
